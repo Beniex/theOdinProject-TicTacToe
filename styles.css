@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+#victoryDisplay {
+    background-color: #ffb3ba; /* Pastel rose */
+    color: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 24px;
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#gameBoard {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#gameBoard div {
+    background-color: #fff5ba; /* Pastel jaune */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#gameBoard div.cross {
+    background-color: #bae1ff; /* Pastel bleu */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="%23ffb3ba" d="M18.36 6.64a1 1 0 0 0-1.41 0L12 11.59 7.05 6.64a1 1 0 1 0-1.41 1.41L10.59 13l-5.95 5.95a1 1 0 1 0 1.41 1.41L12 14.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 13l5.95-5.95a1 1 0 0 0 0-1.41z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+}
+
+#gameBoard div.circle {
+    background-color: #ffb3ba; /* Pastel rose */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><circle fill="%23bae1ff" cx="12" cy="12" r="10"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+}
+
+
+#gameTurnAndReset {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#gameTurnDisplay {
+    background-color: #ffdfba; /* Pastel orange */
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#reset {
+    background-color: #ffb3ba; /* Pastel rose */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#reset:hover {
+    background-color: #ff9aa2;
+}

@@ -1,13 +1,6 @@
 const Player1 = 1; 
 const Player2 = 2; 
 
-const VictoryDisplayElement = document.getElementById("victoryDisplay");  
-const GameBoardElement = document.getElementById("gameBoard");
-const GameTurnDisplayElement = document.getElementById("gameTurnDisplay");
-const Reset = document.getElementById("reset"); 
-
-
-
 const GameState = (function(){
     var gameboardState =[]; 
     var gameTurn; 
@@ -15,10 +8,13 @@ const GameState = (function(){
     
     const playRound = (player, box) =>{
         gameboardState[box] = player;
-        checkVictory();  
+        GameBoard.update(); 
+        checkVictory();
+        VictoryDisplay.update();   
         if (victory == 0){
             changeGameTurn(); 
         }
+        gameTurnDisplay.update(); 
     }
 
     const changeGameTurn = () =>{
@@ -36,9 +32,11 @@ const GameState = (function(){
     }
 
     const InitializeOrResetGame = () => {
-        victory = 0; 
+        victory = 0;
+        VictoryDisplay.update();  
         cleanGameboardState(); 
         gameTurn = 1; 
+        gameTurnDisplay.update(); 
     }
 
 
@@ -97,17 +95,37 @@ const GameState = (function(){
         getGameboardState,  
     } 
 })(); 
-/*
+
+
+ 
+const GameBoardElement = document.getElementById("gameBoard");
+const VictoryDisplayElement = document.getElementById("victoryDisplay"); 
+const GameTurnDisplayElement = document.getElementById("gameTurnDisplay");
+const ResetElement = document.getElementById("reset"); 
+
 const GameBoard = (function(){
     const initialize = () => {
         for(let i=0; i<9; i++){
-            var box; 
+            let box = document.createElement("div"); 
+            box.addEventListener('click',function(){ 
+                GameState.playRound(GameState.getGameTurn(),i);
+            })
+            GameBoardElement.appendChild(box); 
 
         }
 
     }
 
     const update = () => {
+        for (let i=0; i<9; i++){ 
+            if(GameState.getGameboardState()[i] == 1){
+                GameBoardElement.querySelectorAll('div')[i] .classList.add('circle');
+            } else if(GameState.getGameboardState()[i] == 2){
+                GameBoardElement.querySelectorAll('div')[i] .classList.add('cross');
+            } else if (GameState.getGameboardState()[i] == 0){
+                GameBoardElement.querySelectorAll('div')[i].classList.remove('cross', 'circle');
+            }
+        }
 
     }
     return {update, initialize}
@@ -115,26 +133,33 @@ const GameBoard = (function(){
 
 const VictoryDisplay = (function(){
     const update = () => {
-        VictoryDisplayElement.textContent = gameboardState.getVictory(); 
+        VictoryDisplayElement.textContent = GameState.getVictory(); 
     }
     return {update}
 })(); 
 
 const gameTurnDisplay = (function(){
     const update = () => {
-        GameTurnDisplayElement.textContent = gameboardState.getGameTurn(); 
+        GameTurnDisplayElement.textContent = GameState.getGameTurn(); 
     }
     return {update}
-})(); 
+})();
 
+const ResetButton = (function(){
+    ResetElement.addEventListener('click', function(){
+        GameState.InitializeOrResetGame();
+        GameBoard.update();  
+        VictoryDisplay.update(); 
+        gameTurnDisplay.update(); 
+    })
+})();
+
+/*
 gameboardState = [0, 0, 0, 1, 1, 1, 0, 0, 0];
 gameboardState = [0, 0, 0, 2, 2, 2, 0, 0, 0];
-
-
 */
 
 console.log("c'est parti");
-GameState.InitializeOrResetGame(); 
-console.log(GameState.getGameboardState() + "gameBoard aprèqcoup");
-
+GameState.InitializeOrResetGame();
+GameBoard.initialize();  
 console.log("c'est fini");
