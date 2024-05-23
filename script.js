@@ -15,8 +15,8 @@ const GameState = (function(){
     
     const playRound = (player, box) =>{
         gameboardState[box] = player;
-        checkVictory(); 
-        if (victory = false){
+        checkVictory();  
+        if (victory == 0){
             changeGameTurn(); 
         }
     }
@@ -30,8 +30,8 @@ const GameState = (function(){
     }
 
     const cleanGameboardState = () =>{
-        for (let i=0; i<9, i++;){
-            gameboard[i]=0; 
+        for (let i=0; i<9; i++){
+            gameboardState[i]=0; 
         }  
     }
 
@@ -41,37 +41,47 @@ const GameState = (function(){
         gameTurn = 1; 
     }
 
-    const detectVictoryPattern = (player) =>{
-        /* colonnes */
-        for(let i=0; i<3, i++;){
-            if (player == gameboardState[i] == gameboardState[i+3] == gameboardState[i+6]){
+
+    const detectVictoryPattern = (player) => {
+        /*colonnes*/
+        for (let i = 0; i < 3; i++) {
+            if (gameboardState[i] === player &&
+                gameboardState[i + 3] === player &&
+                gameboardState[i + 6] === player) {
                 return true; 
             }
         }
-        /* rows */
-        const rowIndices = [0,3, 6]; 
-        for(let i = 0; i < rowIndices.length; i++){
-            var index = rowIndices[i]; 
-            if(player == gameboardState[index] == gameboardState[index+1] == gameboardState[index+2]){
+        /* lignes */
+        const rowIndices = [0, 3, 6]; 
+        for (let i = 0; i < rowIndices.length; i++) {
+            const index = rowIndices[i]; 
+            if (gameboardState[index] === player &&
+                gameboardState[index + 1] === player &&
+                gameboardState[index + 2] === player) {
                 return true; 
             } 
         }
-        /* diagonals */
-        if (player == gameboardState[0] == gameboardState[4] == gameboardState[8]){
+        /* diagonales */
+        if (gameboardState[0] === player &&
+            gameboardState[4] === player &&
+            gameboardState[8] === player) {
             return true; 
         }
-        if (player == gameboardState[2] == gameboardState[4] == gameboardState[6]){
+        if (gameboardState[2] === player &&
+            gameboardState[4] === player &&
+            gameboardState[6] === player) {
             return true; 
         }
-    }
+        return false;
+    };
 
     const checkVictory = () => {
         if (detectVictoryPattern(Player1) == true){
-            return 1; 
+            victory = 1; 
         } else if( detectVictoryPattern(Player2) == true){
-            return 2; 
+            victory =  2; 
         } else {
-            return 0; 
+            victory = 0; 
         }
     }
 
@@ -87,19 +97,44 @@ const GameState = (function(){
         getGameboardState,  
     } 
 })(); 
-
+/*
 const GameBoard = (function(){
-
     const initialize = () => {
+        for(let i=0; i<9; i++){
+            var box; 
+
+        }
 
     }
 
-    return {
-        update, 
-        initialize,
+    const update = () => {
+
     }
+    return {update, initialize}
 })(); 
 
 const VictoryDisplay = (function(){
-
+    const update = () => {
+        VictoryDisplayElement.textContent = gameboardState.getVictory(); 
+    }
+    return {update}
 })(); 
+
+const gameTurnDisplay = (function(){
+    const update = () => {
+        GameTurnDisplayElement.textContent = gameboardState.getGameTurn(); 
+    }
+    return {update}
+})(); 
+
+gameboardState = [0, 0, 0, 1, 1, 1, 0, 0, 0];
+gameboardState = [0, 0, 0, 2, 2, 2, 0, 0, 0];
+
+
+*/
+
+console.log("c'est parti");
+GameState.InitializeOrResetGame(); 
+console.log(GameState.getGameboardState() + "gameBoard aprèqcoup");
+
+console.log("c'est fini");
