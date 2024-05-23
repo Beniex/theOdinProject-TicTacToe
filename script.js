@@ -1,16 +1,22 @@
 const Player1 = 1; 
 const Player2 = 2; 
+const Player1Name = prompt("Who's the first player?"); 
+const Player2Name = prompt("Who's the second player?"); 
+ 
 
 const GameState = (function(){
     var gameboardState =[]; 
     var gameTurn; 
     var victory; 
+    var player1Score = 0; 
+    var player2Score = 0;
     
     const playRound = (player, box) =>{
         gameboardState[box] = player;
         GameBoard.update(); 
         checkVictory();
-        VictoryDisplay.update();   
+        VictoryDisplay.update(); 
+        ScorePlayerDisplay.update();   
         if (victory == 0){
             changeGameTurn(); 
         }
@@ -35,7 +41,7 @@ const GameState = (function(){
         victory = 0;
         VictoryDisplay.update();  
         cleanGameboardState(); 
-        gameTurn = 1; 
+        gameTurn = Math.floor(Math.random() * 2) + 1;
         gameTurnDisplay.update(); 
     }
 
@@ -76,23 +82,34 @@ const GameState = (function(){
     const checkVictory = () => {
         if (detectVictoryPattern(Player1) == true){
             victory = 1; 
+            GameState.plusPointPlayer1(); 
         } else if( detectVictoryPattern(Player2) == true){
             victory =  2; 
+            GameState.plusPointPlayer2(); 
         } else {
             victory = 0; 
         }
     }
 
+    const plusPointPlayer1 = () => {player1Score++}; 
+    const plusPointPlayer2 = () => {player2Score++}; 
+
     const getVictory = () => victory; 
     const getGameTurn = () => gameTurn; 
     const getGameboardState = () => gameboardState; 
+    const getPlayer1Score = () => player1Score; 
+    const getPlayer2Score = () => player2Score; 
 
     return {
         playRound, 
         InitializeOrResetGame,
         getVictory,
         getGameTurn,
-        getGameboardState,  
+        getGameboardState,
+        getPlayer1Score,
+        getPlayer2Score, 
+        plusPointPlayer1, 
+        plusPointPlayer2 
     } 
 })(); 
 
@@ -102,6 +119,9 @@ const GameBoardElement = document.getElementById("gameBoard");
 const VictoryDisplayElement = document.getElementById("victoryDisplay"); 
 const GameTurnDisplayElement = document.getElementById("gameTurnDisplay");
 const ResetElement = document.getElementById("reset"); 
+const ScorePlayer1Element = document.getElementById("scoreDisplay1");
+const ScorePlayer2Element = document.getElementById("scoreDisplay2");
+
 
 const GameBoard = (function(){
     const initialize = () => {
@@ -133,14 +153,24 @@ const GameBoard = (function(){
 
 const VictoryDisplay = (function(){
     const update = () => {
-        VictoryDisplayElement.textContent = GameState.getVictory(); 
+        if(GameState.getVictory()==1){
+            VictoryDisplayElement.textContent = Player1Name + " won!"; 
+        } else if (GameState.getVictory()==2){
+            VictoryDisplayElement.textContent = Player2Name + " won!"; 
+        } else if (GameState.getVictory()== 0){
+            VictoryDisplayElement.textContent = "Let's play!";
+        }
     }
     return {update}
 })(); 
 
 const gameTurnDisplay = (function(){
     const update = () => {
-        GameTurnDisplayElement.textContent = GameState.getGameTurn(); 
+        if(GameState.getGameTurn() == 1 ){
+            GameTurnDisplayElement.textContent = Player1Name + " plays!";
+        } else if(GameState.getGameTurn() == 2 ){
+            GameTurnDisplayElement.textContent = Player2Name + " plays!";
+        }
     }
     return {update}
 })();
@@ -153,6 +183,15 @@ const ResetButton = (function(){
         gameTurnDisplay.update(); 
     })
 })();
+
+const ScorePlayerDisplay = (function(){
+    const update = () => {
+        ScorePlayer1Element.textContent = Player1Name + " : " + GameState.getPlayer1Score();
+        ScorePlayer2Element.textContent = Player2Name + " : " + GameState.getPlayer2Score();  
+    }
+    return {update}
+})();
+
 
 /*
 gameboardState = [0, 0, 0, 1, 1, 1, 0, 0, 0];

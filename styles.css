@@ -6,14 +6,19 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    background-color: rgb(91, 172, 248);
 }
 
 .container {
     text-align: center;
+    width: 60%;
+    margin: 10px;
+    background-color: rgb(91, 172, 248);
 }
-
-#victoryDisplay {
-    background-color: #ffb3ba; /* Pastel rose */
+#scoresDisplay{
+    display: flex;
+    justify-content: space-between;
+    background-color:#fc8692;; 
     color: #ffffff;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -21,6 +26,32 @@ body {
     width: 100%;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+.scoreDisplay{
+    background-color: #ffb3ba; /* Pastel rose */
+    color: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 24px;
+    width: 50%;
+    margin-bottom: 20px;
+    margin-left: 12px;
+    margin-right: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+#victoryDisplay {
+    background-color: rgb(91, 172, 248);
+    color: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 24px;
+    width: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 #gameBoard {
