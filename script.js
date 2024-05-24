@@ -12,15 +12,18 @@ const GameState = (function(){
     var player2Score = 0;
     
     const playRound = (player, box) =>{
-        gameboardState[box] = player;
-        GameBoard.update(); 
-        checkVictory();
-        VictoryDisplay.update(); 
-        ScorePlayerDisplay.update();   
-        if (victory == 0){
-            changeGameTurn(); 
+        if(gameboardState[box] == 0){
+            gameboardState[box] = player;
+            GameBoard.update(); 
+            checkVictory();
+            VictoryDisplay.update(); 
+            ScorePlayerDisplay.update();   
+            if (victory == 0){
+                changeGameTurn(); 
+            }
+            gameTurnDisplay.update();
         }
-        gameTurnDisplay.update(); 
+ 
     }
 
     const changeGameTurn = () =>{
